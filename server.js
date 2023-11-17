@@ -11,6 +11,9 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
+app.use('/new-game', express.static(path.join(__dirname, 'public/app')));
+app.use('/join-game', express.static(path.join(__dirname, 'public/app')));
+
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
