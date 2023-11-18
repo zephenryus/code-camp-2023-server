@@ -203,9 +203,9 @@ app.post('/update-game-phase', (req, res) => {
 });
 
 app.post('/get-game-phase', (req, res) => {
-  const { gameId } = req.body;
+  const { game_id } = req.body;
 
-  db.get('SELECT phase FROM games WHERE game_id = ?', [gameId], (err, row) => {
+  db.get('SELECT phase FROM games WHERE game_id = ?', [game_id], (err, row) => {
     if (err) {
       console.error(err.message);
       res.status(500).send('Error occurred while retrieving game phase');
