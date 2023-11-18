@@ -178,7 +178,7 @@ app.get('/join-latest-game', (req, res) => {
 
 app.get('/game-ready-check', (req, res) => {
   // Replace with your actual query to check the flag
-  db.get('SELECT flag FROM your_table', (err, row) => {
+  db.get('SELECT game_ready FROM games', (err, row) => {
     if (err) {
       res.status(500).send('Error occurred');
     } else {
