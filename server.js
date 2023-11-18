@@ -3,11 +3,13 @@ const socketIo = require('socket.io');
 const axios = require('axios');
 const https = require('https');
 const path = require('path');
+const cors = require('cors');
 
 const app = express();
 const port = 8080;
 const memesData = require('./public/assets/images.json');
 
+app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 const httpsAgent = new https.Agent({
   rejectUnauthorized: false
