@@ -1,30 +1,56 @@
+const sqlite3 = require('sqlite3');
 const express = require('express');
 const socketIo = require('socket.io');
 const axios = require('axios');
 const https = require('https');
 const path = require('path');
 const cors = require('cors');
-
-const app = express();
 const port = 8080;
 const memesData = require('./public/assets/images.json');
 
+/**
+ * Initialize the Database
+ */
+let db = new sqlite3.Database('./mydb.sqlite3', (err) => {
+  if (err) {
+    console.error(err.message);
+  }
+  console.log('Connected to the SQLite database.');
+});
+
+/**
+ * Initialize the application
+ * @type {*|Express}
+ */
+const app = express();
 app.use(cors());
+app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 const httpsAgent = new https.Agent({
   rejectUnauthorized: false
 });
 
+/**
+ * Utilities
+ */
+function searchMemes (query) {
+  return memesData.filter(meme => meme.name.toLowerCase().includes(query.toLowerCase()));
+}
+
+function randomMemes () {
+  let shuffled = memesData.sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, 12);
+}
+
+/**
+ * Endpoints
+ */
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
 app.use('/new-game', express.static(path.join(__dirname, 'public/app')));
 app.use('/join-game', express.static(path.join(__dirname, 'public/app')));
-
-function searchMemes (query) {
-  return memesData.filter(meme => meme.name.toLowerCase().includes(query.toLowerCase()));
-}
 
 // Search endpoint
 app.get('/search-memes', (req, res) => {
@@ -36,13 +62,19 @@ app.get('/search-memes', (req, res) => {
   res.json(results);
 });
 
-function randomMemes () {
-  let shuffled = memesData.sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, 12);
-}
-
 app.get('/starting-memes', (req, res) => {
     res.json(randomMemes());
+});
+
+app.post('/save-selected-memes', (req, res) => {
+  const { playerId, memeIds } = req.body;
+  console.log(playerId);
+  console.log(memeIds);
+
+  // Logic to save the meme IDs and player association in the database
+  // db.run("INSERT INTO ...");
+
+  res.json({ message: 'Memes saved successfully' });
 });
 
 app.listen(port, () => {
