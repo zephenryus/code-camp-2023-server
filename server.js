@@ -124,6 +124,8 @@ app.post('/save-text-pool', (req, res) => {
   res.json({ message: 'Texts saved successfully' });
 });
 
+app.use(express.static(path.join(__dirname, 'public/app/')));
+
 // Redirect all other requests to the Angular app
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, 'public/app/index.html'));
