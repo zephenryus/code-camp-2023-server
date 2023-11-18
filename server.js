@@ -124,6 +124,17 @@ app.post('/save-text-pool', (req, res) => {
   res.json({ message: 'Texts saved successfully' });
 });
 
+app.get('/total-players', (req, res) => {
+  db.get('SELECT COUNT(*) AS count FROM client_hashes', (err, row) => {
+    if (err) {
+      res.status(500).send('Error occurred');
+    } else {
+      res.json({ totalPlayers: row.count });
+    }
+  });
+});
+
+
 app.use(express.static(path.join(__dirname, 'public/app/')));
 
 // Redirect all other requests to the Angular app
