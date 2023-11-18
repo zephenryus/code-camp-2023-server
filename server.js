@@ -81,8 +81,17 @@ app.post('/save-selected-memes', (req, res) => {
 
 app.get('/login', (req, res) => {
   const hashedIp = crypto.createHash('sha256').update(req.ip).digest('hex');
-  console.log(hashedIp);
-})
+
+  db.run('INSERT INTO client_hashes (hashed_ip) VALUES (?)', [hashedIp], function(err) {
+    if (err) {
+      console.error(err.message);
+      res.status(500).send("Error while inserting data");
+    } else {
+      console.log(`A row has been inserted with rowid ${this.lastID}`);
+      res.json({ hash: hashedIp }); // Send the hash back to the user
+    }
+  });
+});
 
 app.listen(port, () => {
   console.log(`Listening on port ${ port }`);
