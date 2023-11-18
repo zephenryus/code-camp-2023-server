@@ -51,8 +51,8 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
-app.use('/new-game', express.static(path.join(__dirname, 'public/app')));
-app.use('/join-game', express.static(path.join(__dirname, 'public/app')));
+app.use('/new-game', express.static(path.join(__dirname, 'public/app/')));
+app.use('/join-game', express.static(path.join(__dirname, 'public/app/')));
 
 // Search endpoint
 app.get('/search-memes', (req, res) => {
@@ -122,6 +122,11 @@ app.post('/save-text-pool', (req, res) => {
   });
 
   res.json({ message: 'Texts saved successfully' });
+});
+
+// Redirect all other requests to the Angular app
+app.get('*', function(req, res) {
+  res.sendFile(path.join(__dirname, 'public/app/index.html'));
 });
 
 app.listen(port, () => {
