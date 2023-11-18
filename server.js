@@ -202,6 +202,23 @@ app.post('/update-game-phase', (req, res) => {
   });
 });
 
+app.post('/get-game-phase', (req, res) => {
+  const { gameId } = req.body;
+
+  db.get('SELECT phase FROM games WHERE game_id = ?', [gameId], (err, row) => {
+    if (err) {
+      console.error(err.message);
+      res.status(500).send('Error occurred while retrieving game phase');
+    } else {
+      // Check if a game was found
+      if (row) {
+        res.json({ phase: row.phase });
+      } else {
+        res.status(404).send('Game not found');
+      }
+    }
+  });
+});
 
 
 app.use(express.static(path.join(__dirname, 'public/app/')));
