@@ -81,6 +81,7 @@ app.post('/save-selected-memes', (req, res) => {
 
 app.get('/login', (req, res) => {
   const hashedIp = crypto.createHash('sha256').update(req.ip).digest('hex');
+  console.log(hashedIp);
 })
 
 app.listen(port, () => {
