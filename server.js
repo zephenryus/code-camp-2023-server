@@ -190,7 +190,7 @@ app.get('/game-ready-check', (req, res) => {
 
 app.post('/update-game-phase', (req, res) => {
   const { gameId, completedPhase } = req.body;
-
+  console.log(`Updating game phase too ${completedPhase}`);
   db.run('UPDATE games SET phase = ? WHERE game_id = ?', [completedPhase, gameId], function(err) {
     if (err) {
       console.error(err.message);
