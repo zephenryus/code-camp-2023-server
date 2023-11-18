@@ -13,7 +13,7 @@ const memesData = require('./public/assets/images.json');
 /**
  * Initialize the Database
  */
-let db = new sqlite3.Database('./mydb.sqlite3', (err) => {
+let db = new sqlite3.Database('./code_camp.sqlite3', (err) => {
   if (err) {
     console.error(err.message);
   }
