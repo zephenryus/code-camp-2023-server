@@ -196,7 +196,7 @@ app.post('/update-game-phase', (req, res) => {
       console.error(err.message);
       res.status(500).send('Error occurred while updating game phase');
     } else {
-      console.log(`Game phase updated for game ID: ${gameId}`);
+      console.log(`Game phase updated to ${completedPhase} for game ID: ${gameId}`);
       res.json({ message: 'Game phase updated successfully' });
     }
   });
