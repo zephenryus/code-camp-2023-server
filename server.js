@@ -214,7 +214,7 @@ app.post('/get-game-phase', (req, res) => {
       if (row) {
         res.json({ phase: row.phase });
       } else {
-        res.status(404).send('Game not found');
+        res.status(404).send(`Game ${game_id} not found`);
       }
     }
   });
