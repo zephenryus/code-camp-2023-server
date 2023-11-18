@@ -5,6 +5,8 @@ const axios = require('axios');
 const https = require('https');
 const path = require('path');
 const cors = require('cors');
+const crypto = require('crypto');
+
 const port = 8080;
 const memesData = require('./public/assets/images.json');
 
@@ -78,7 +80,7 @@ app.post('/save-selected-memes', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-  console.log(req.ip);
+  const hashedIp = crypto.createHash('sha256').update(req.ip).digest('hex');
 })
 
 app.listen(port, () => {
