@@ -69,12 +69,22 @@ app.get('/starting-memes', (req, res) => {
 });
 
 app.post('/save-selected-memes', (req, res) => {
-  const { playerId, memeIds } = req.body;
-  console.log(playerId);
-  console.log(memeIds);
+  const playerId = req.body.playerId; // Assuming this is the hashed IP or similar unique identifier
+  const memeIds = req.body.memeIds;
+  const gameId = 1 /* Your logic to determine or generate the game ID */;
 
-  // Logic to save the meme IDs and player association in the database
-  // db.run("INSERT INTO ...");
+  memeIds.forEach(memeId => {
+    db.run('INSERT INTO game_data (game_id, player_id, meme_id) VALUES (?, ?, ?)',
+      [gameId, playerId, memeId],
+      function(err) {
+        if (err) {
+          console.error(err.message);
+          // Handle error appropriately
+        }
+        console.log(`A row has been inserted with rowid ${this.lastID}`);
+      }
+    );
+  });
 
   res.json({ message: 'Memes saved successfully' });
 });
