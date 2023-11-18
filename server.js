@@ -164,6 +164,18 @@ app.post('/update-game-status', (req, res) => {
   });
 });
 
+app.get('/join-latest-game', (req, res) => {
+  db.get('SELECT game_id FROM games ORDER BY id DESC LIMIT 1', (err, row) => {
+    if (err) {
+      console.error(err.message);
+      res.status(500).send('Error occurred while retrieving the latest game');
+    } else {
+      res.json({ gameId: row ? row.game_id : null });
+    }
+  });
+});
+
+
 app.get('/game-ready-check', (req, res) => {
   // Replace with your actual query to check the flag
   db.get('SELECT flag FROM your_table', (err, row) => {
