@@ -1,47 +1,55 @@
+body {
+    background-color: #0b0048;
+    height: 100vh;
+    overflow: hidden;
+}
+
 .home-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: #0b0048; // Dark blue background
     color: black;
 }
 
 .logo-container {
-    margin-bottom: 20px;
+    margin-bottom: 40px; // Increase margin for the logo container
     text-align: center;
 }
 
 .logo {
-    max-width: 100%;
-    width: 381px;
+    width: 550px; // Increase logo width
     margin: 0 auto;
 }
 
 .button-container {
     display: flex;
-    gap: 20px;
+    gap: 40px; // Increase gap between buttons
 }
 
 .join-button, .new-game-button {
     position: relative;
-    padding: 15px 30px;
-    background-color: #ff7f00; // Orange button color
-    color: black;
-    font-size: 18px;
+    padding: 0; // Remove padding to make room for background image
+    width: 350px; // Increase button width
+    height: 117px; // Increase button height
     cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s; // Add transition for smooth color change
-    text-decoration: none; // Remove the default underline for links
+    border-radius: 10px; // Increase border radius
+    transition: background-color 0.3s;
+    text-decoration: none;
 
-    span {
-        display: inline-block;
-        font-family: 'Press Start 2P', cursive; // Apply the font to the words in the buttons
-    }
+    background-size: cover; // Ensure the entire button is covered by the background image
 
     &:hover {
-        background-color: #ffaa00; // Lighter shade of orange on hover
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Add a subtle box shadow on hover
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); // Increase box shadow on hover
     }
+}
+
+.join-button {
+    background-image: url('Asset-3join.png');
+    background-position: 10% center; // Adjust the left position (e.g., 10%)
+}
+
+.new-game-button {
+    background-image: url('Asset-2new.png');
 }
