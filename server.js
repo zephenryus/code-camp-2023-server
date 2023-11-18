@@ -134,6 +134,47 @@ app.get('/total-players', (req, res) => {
   });
 });
 
+app.post('/create-game', (req, res) => {
+  // Generate a game ID, here using a simple timestamp
+  const currentTimestamp = Date.now().toString();
+  const gameId = crypto.createHash('sha256').update(currentTimestamp).digest('hex');
+
+  db.run('INSERT INTO games (game_id) VALUES (?)', [gameId], function(err) {
+    if (err) {
+      console.error(err.message);
+      res.status(500).send('Error creating game');
+    } else {
+      console.log(`A new game has been created with ID: ${gameId}`);
+      res.json({ gameId: gameId });
+    }
+  });
+});
+
+app.post('/update-game-status', (req, res) => {
+  const { gameId } = req.body;
+
+  db.run('UPDATE games SET game_ready = 1 WHERE game_id = ?', [gameId], function(err) {
+    if (err) {
+      console.error(err.message);
+      res.status(500).send('Error updating game status');
+    } else {
+      console.log(`Game status updated for game ID: ${gameId}`);
+      res.json({ message: 'Game status updated successfully' });
+    }
+  });
+});
+
+app.get('/game-ready-check', (req, res) => {
+  // Replace with your actual query to check the flag
+  db.get('SELECT flag FROM your_table', (err, row) => {
+    if (err) {
+      res.status(500).send('Error occurred');
+    } else {
+      res.json({ flag: row.flag });
+    }
+  });
+});
+
 
 app.use(express.static(path.join(__dirname, 'public/app/')));
 
