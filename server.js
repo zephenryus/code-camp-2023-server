@@ -77,6 +77,10 @@ app.post('/save-selected-memes', (req, res) => {
   res.json({ message: 'Memes saved successfully' });
 });
 
+app.get('/login', (req, res) => {
+  console.log(req.ip);
+})
+
 app.listen(port, () => {
   console.log(`Listening on port ${ port }`);
 });
