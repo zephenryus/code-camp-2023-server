@@ -36,6 +36,15 @@ app.get('/search-memes', (req, res) => {
   res.json(results);
 });
 
+function randomMemes () {
+  let shuffled = memesData.sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, 12);
+}
+
+app.get('/starting-memes', (req, res) => {
+    res.json(randomMemes());
+});
+
 app.listen(port, () => {
   console.log(`Listening on port ${ port }`);
 });
