@@ -103,6 +103,27 @@ app.get('/login', (req, res) => {
   });
 });
 
+app.post('/save-text-pool', (req, res) => {
+  const playerId = req.body.playerId;
+  const textPool = req.body.textPool;
+  const gameId = 1 /* Your logic to determine or generate the game ID */;
+
+  textPool.forEach(text => {
+    db.run('INSERT INTO text_data (game_id, player_id, text) VALUES (?, ?, ?)',
+      [gameId, playerId, text],
+      function(err) {
+        if (err) {
+          console.error(err.message);
+          // Handle error appropriately
+        }
+        console.log(`A row has been inserted with rowid ${this.lastID}`);
+      }
+    );
+  });
+
+  res.json({ message: 'Texts saved successfully' });
+});
+
 app.listen(port, () => {
   console.log(`Listening on port ${ port }`);
 });
